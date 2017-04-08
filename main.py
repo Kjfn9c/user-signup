@@ -1,11 +1,13 @@
 import webapp2
 import cgi
 import re
+#<link rel="stylesheet" href="styles.css">
 page_header = """
 <!DOCTYPE html>
 <html>
 <head>
     <title>Signup</title>
+
     <style type="text/css">
         .error {
             color: red;
