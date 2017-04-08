@@ -24,6 +24,17 @@ page_footer = """
 </html>
 """
 
+USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
+def valid_username(username):
+    return USER_RE.match(username)
+PASS_RE = re.compile("^.{3,20}$")
+def valid_password(password):
+    return PASS_RE.match(password)
+EMAIL_RE = re.compile("^[\S]+@[\S]+.[\S]+$")
+def valid_email(email):
+    return not email or EMAIL_RE.match(email)
+
+
 class Index(webapp2.RequestHandler):
     def get(self):
         signup_header = "<h2>Signup</h2>"
@@ -76,6 +87,10 @@ class AddUsername(webapp2.RequestHandler):
                     else:
                         error = "Your passwords must be identical".format(Vpassword)
                         self.redirect("/?error=" + error)
+
+        if not valid_email(email):
+            error = "Your email is invalid".format(email)
+            self.redirect("/?error=" + error)
 
         username = cgi.escape(username)
         username_sentence = "Thanks for signing up, " + username
